@@ -1,5 +1,6 @@
 import axios from "axios";
-import Empty from "./Empty";
+// import Empty from "./Empty";
+import Chat from "./Chat/Chat";
 import { useRouter } from "next/router";
 import ChatList from "./Chatlist/ChatList";
 import React, { useEffect, useState } from "react";
@@ -50,7 +51,8 @@ const Main = () => {
   return (
     <div className="grid grid-cols-main h-screen w-screen max-h-screen max-w-full overflow-hidden">
       <ChatList />
-      <Empty />
+      {/* <Empty /> */}
+      <Chat />
     </div>
   );
 }
