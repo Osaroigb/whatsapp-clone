@@ -2,7 +2,6 @@ import React from "react";
 import { BsCheck, BsCheckAll } from "react-icons/bs";
 
 const MessageStatus = ({ messageStatus }) => {
-  console.info('messageStatus', messageStatus);
 
   return (
     <>

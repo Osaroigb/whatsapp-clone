@@ -4,12 +4,13 @@ import { MdSend } from "react-icons/md";
 import { BsEmojiSmile } from "react-icons/bs";
 import { ImAttachment } from "react-icons/im";
 // import { FaMicrophone } from "react-icons/fa";
+import { reducerCases } from "@/context/constants";
 import { ADD_MESSAGE_ROUTE } from "@/utils/ApiRoutes";
 import { useStateProvider } from "@/context/StateContext";
 
 const MessageBar = () => {
   const [message, setMessage] = useState("");
-  const [{ userInfo, currentChatUser }, dispatch] = useStateProvider();
+  const [{ userInfo, currentChatUser, socket }, dispatch] = useStateProvider();
 
   const sendMessage = async() => {
     try {
@@ -19,7 +20,18 @@ const MessageBar = () => {
         message
       });
 
-      console.info(data);
+      socket.current.emit("send-msg", {
+        to: currentChatUser?.id,
+        from: userInfo?.id,
+        message: data.message
+      });
+
+      dispatch({
+        type: reducerCases.ADD_MESSAGE,
+        newMessage: { ...data.message },
+        fromSelf: true,
+      });
+
       setMessage("");
     } catch (err) {
       console.error(err);
