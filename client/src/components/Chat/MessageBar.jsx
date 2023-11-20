@@ -1,10 +1,31 @@
-import React from "react";
+import axios from "axios";
+import React, { useState } from "react";
 import { MdSend } from "react-icons/md";
 import { BsEmojiSmile } from "react-icons/bs";
-// import { FaMicrophone } from "react-icons/fa";
 import { ImAttachment } from "react-icons/im";
+// import { FaMicrophone } from "react-icons/fa";
+import { ADD_MESSAGE_ROUTE } from "@/utils/ApiRoutes";
+import { useStateProvider } from "@/context/StateContext";
 
 const MessageBar = () => {
+  const [message, setMessage] = useState("");
+  const [{ userInfo, currentChatUser }, dispatch] = useStateProvider();
+
+  const sendMessage = async() => {
+    try {
+      const { data } = await axios.post(ADD_MESSAGE_ROUTE, {
+        to: currentChatUser?.id,
+        from: userInfo?.id,
+        message
+      });
+
+      console.info(data);
+      setMessage("");
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   return (
     <div className="h-20 bg-panel-header-background px-4 flex items-center gap-6 relative">
       
@@ -15,12 +36,23 @@ const MessageBar = () => {
       </div>
 
       <div className="w-full rounded-lg h-10 flex items-center">
-        <input type="text" placeholder="Type a message" className="text-sm focus:outline-none bg-input-background text-white h-10 rounded-lg px-5 py-4 w-full"/>
+        <input 
+          type="text" 
+          placeholder="Type a message" 
+          className="text-sm focus:outline-none bg-input-background text-white h-10 rounded-lg px-5 py-4 w-full"
+          onChange={e => setMessage(e.target.value)}
+          value={message}
+        />
       </div>
 
       <div className="flex w-10 items-center justify-center">
         <button>
-          <MdSend className="text-xl text-panel-header-icon cursor-pointer" title="Send Message"/>
+          <MdSend 
+            className="text-xl text-panel-header-icon cursor-pointer" 
+            title="Send Message"
+            onClick={sendMessage}
+          />
+          
           {/* <FaMicrophone className="text-xl text-panel-header-icon cursor-pointer" title="Record" /> */}
         </button>
       </div>

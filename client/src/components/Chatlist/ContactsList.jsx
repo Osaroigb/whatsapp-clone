@@ -63,14 +63,14 @@ const ContactsList = () => {
 
         {
           Object.entries(allContacts).map(([initialLetter, userList]) => {
-            console.info(userList);
+            // console.info(userList);
 
             return (
               <div key={Date.now() + initialLetter}>
                 <div className="pl-10 text-teal-light py-5">{initialLetter}</div>
                 {
                   userList.map(contact => {
-                    console.info(contact);
+                    // console.info(contact);
 
                     return (
                       <ChatLIstItem 
