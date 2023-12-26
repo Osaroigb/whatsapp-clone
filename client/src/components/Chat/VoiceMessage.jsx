@@ -23,11 +23,16 @@ const VoiceMessage = ({ message }) => {
     const audio = new Audio(audioURL);
 
     setAudioMessage(audio);
-    waveform.current.load(audioURL);
 
-    waveform.current.on("ready", () => {
-      setTotalDuration(waveform.current.getDuration());
-    });
+    if(waveform.current) {
+
+      waveform.current.load(audioURL);
+
+      waveform.current.once("ready", () => {
+        setTotalDuration(waveform.current.getDuration());
+      });
+    }
+
   }, [message.message]);
 
   useEffect(() => {
