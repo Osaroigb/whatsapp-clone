@@ -3,11 +3,12 @@ import Avatar from "../common/Avatar";
 import { MdCall } from "react-icons/md";
 import { IoVideocam } from "react-icons/io5";
 import { BiSearchAlt2 } from "react-icons/bi";
+import { reducerCases } from "@/context/constants";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { useStateProvider } from "@/context/StateContext";
 
 const ChatHeader = () => {
-  const [{ currentChatUser }] = useStateProvider();
+  const [{ currentChatUser }, dispatch] = useStateProvider();
 
   return (
     <div className="h-16 px-4 py-3 flex justify-between items-center bg-panel-header-background z-10">
@@ -27,7 +28,7 @@ const ChatHeader = () => {
       <div className="flex gap-6">
         <MdCall className="cursor-pointer text-panel-header-icon text-xl"/>
         <IoVideocam className="cursor-pointer text-panel-header-icon text-xl"/>
-        <BiSearchAlt2 className="cursor-pointer text-panel-header-icon text-xl"/>
+        <BiSearchAlt2 className="cursor-pointer text-panel-header-icon text-xl" onClick={() => dispatch({type: reducerCases.SET_MESSAGE_SEARCH})}/>
         <BsThreeDotsVertical className="cursor-pointer text-panel-header-icon text-xl"/>
       </div>
 

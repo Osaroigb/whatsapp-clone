@@ -6,6 +6,7 @@ import { useRouter } from "next/router";
 import ChatList from "./Chatlist/ChatList";
 import { onAuthStateChanged } from "firebase/auth";
 import { reducerCases } from "@/context/constants";
+import SearchMessages from "./Chat/SearchMessages";
 import { firebaseAuth } from "@/utils/FirebaseConfig";
 import { useStateProvider } from "@/context/StateContext";
 import React, { useEffect, useRef, useState } from "react";
@@ -17,7 +18,7 @@ const Main = () => {
   const [socketEvent, setSocketEvent] = useState(false);
 
   const [redirectLogin, setRedirectLogin] = useState(false);
-  const [{ userInfo, currentChatUser }, dispatch] = useStateProvider();
+  const [{ userInfo, currentChatUser, messagesSearch }, dispatch] = useStateProvider();
 
   useEffect(() => {
     if(redirectLogin) router.push("/login");
@@ -91,7 +92,12 @@ const Main = () => {
   return (
     <div className="grid grid-cols-main h-screen w-screen max-h-screen max-w-full overflow-hidden">
       <ChatList />
-      { currentChatUser ? <Chat /> : <Empty /> }
+      {currentChatUser ? 
+      <div className={messagesSearch ? "grid grid-cols-2" : "grid-cols-2"}>
+        <Chat />
+        {messagesSearch && <SearchMessages />}
+      </div> 
+      : <Empty />}
     </div>
   );
 }
