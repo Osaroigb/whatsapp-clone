@@ -58,9 +58,9 @@ const ChatLIstItem = ({ data, isContactPage = false }) => {
 
         <div className="flex border-b border-conversation-border pb-2 pt-1 pr-2">
           <div className="flex justify-between w-full">
+            
             <span className="text-sm text-secondary line-clamp-1">
-              
-              {isContactPage ? data?.about || "\u00A0" : 
+              {isContactPage ? data?.about || "\u00A0" : (
                 <div className="flex items-center gap-1 max-w-[200px] sm:max-w-[250px] md:max-w-[300px] lg:max-w-[200px] xl:max-w-[300px]">
                   {data.senderId === userInfo.id && (
                     <MessageStatus messageStatus={data.messageStatus}/>
@@ -84,9 +84,12 @@ const ChatLIstItem = ({ data, isContactPage = false }) => {
                     </span>
                   )}
                 </div>
-              }
-
+              )}
             </span>
+
+            {
+              data.totalUnreadMessages > 0 && <span className="text-sm bg-icon-green px-[5px] rounded-full">{data.totalUnreadMessages}</span>
+            }
           </div>
         </div>
 

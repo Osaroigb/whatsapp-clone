@@ -6,7 +6,7 @@ import { useStateProvider } from "@/context/StateContext";
 import { GET_INITIAL_CONTACTS_ROUTE } from "@/utils/ApiRoutes";
 
 const List = () => {
-  const [{ userInfo, userContacts }, dispatch] = useStateProvider();
+  const [{ userInfo, userContacts, filteredContacts }, dispatch] = useStateProvider();
 
   useEffect(() => {
     const getContacts = async() => {
@@ -26,7 +26,15 @@ const List = () => {
   
   return (
     <div className="flex-auto bg-search-input-container-background overflow-auto max-h-full custom-scrollbar">
-      {userContacts.map((contact) => <ChatLIstItem data={contact} key={contact.id}/>)}
+      {
+        filteredContacts && filteredContacts.length > 0 ? 
+        (filteredContacts.map(contact => 
+          <ChatLIstItem data={contact} key={contact.id}/>
+        )):
+        (userContacts.map(contact => 
+          <ChatLIstItem data={contact} key={contact.id}/>
+        ))
+      }
     </div>
   );
 };
