@@ -85,8 +85,7 @@ const ContactsList = () => {
         {Object.entries(searchContacts).map(([initialLetter, userList]) => {
             // console.info(userList);
             return (
-              <>
-              {userList.length && (
+              userList.length > 0 && (
                 <div key={Date.now() + initialLetter}>
                   <div className="pl-10 text-teal-light py-5">{initialLetter}</div>
                   
@@ -102,8 +101,8 @@ const ContactsList = () => {
                     })
                   }
                 </div>
-              )}
-              </>
+              )
+             
             );
 
         })}
