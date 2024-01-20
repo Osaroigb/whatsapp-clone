@@ -1,4 +1,5 @@
 import getPrismaInstance from "../utils/PrismaClient.js";
+import { generateToken04 } from "../utils/TokenGenerator.js";
 
 export const checkUser = async (req, res, next) => {
   try {
@@ -67,6 +68,28 @@ export const getAllUsers = async (req, res, next) => {
 
     return res.status(200).send({ msg: "All users fetched successfully!", success: true, users: usersGroupedByInitialLetter });
   } catch (err) {
+    next(err);
+  }
+};
+
+export const generateToken = async (req, res, next) => {
+  try {
+    const appId = parseInt(process.env.ZEGO_APP_ID);
+    const serverSecret = process.env.ZEGO_SERVER_ID;
+
+    const userId = req.params.userId;
+    const effectiveTime = 3600;
+    const payload = "";
+
+    if (appId && serverSecret && userId) {
+      const token = generateToken04(appId, userId, serverSecret, effectiveTime, payload);
+
+      res.status(200).json({ token });
+    }
+
+    return res.status(400).send("User id, app id & server secret is required!");
+  } catch (err) {
+    if (err.code === 'ERR_HTTP_HEADERS_SENT') return next();
     next(err);
   }
 };
