@@ -9,7 +9,7 @@ import { BsThreeDotsVertical } from "react-icons/bs";
 import { useStateProvider } from "@/context/StateContext";
 
 const ChatHeader = () => {
-  const [{ currentChatUser }, dispatch] = useStateProvider();
+  const [{ currentChatUser, onlineUsers }, dispatch] = useStateProvider();
 
   const [isContextMenuVisible, setIsContextMenuVisible] = useState(false);
   const [contextMenuCordinates, setContextMenuCordinates] = useState({
@@ -66,7 +66,11 @@ const ChatHeader = () => {
         
         <div className="flex flex-col">
           <span className="text-primary-strong">{currentChatUser?.name}</span>
-          <span className="text-secondary text-sm">online/offline</span>
+          <span className="text-secondary text-sm">
+            {
+              onlineUsers.includes(currentChatUser.id) ? "online" : "offline"
+            }
+          </span>
         </div>
 
       </div>
