@@ -121,7 +121,23 @@ const Main = () => {
           onlineUsers
         });
       });
-      
+
+      // socket.current.on("message-deleted", ({ messageId }) => {
+      //   // Update your UI to reflect the deleted message
+      //   dispatch({
+      //     type: reducerCases.DELETE_MESSAGE,
+      //     messageId,
+      //   });
+      // });
+
+      // socket.current.on("message-edited", ({ messageId }) => {
+      //   // Update your UI to reflect the edited message
+      //   dispatch({
+      //     type: reducerCases.EDIT_MESSAGE,
+      //     messageId,
+      //   });
+      // });
+
       setSocketEvent(true);
     }
   }, [socket.current]);
